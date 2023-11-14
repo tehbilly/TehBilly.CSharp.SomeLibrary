@@ -24,3 +24,18 @@ jobs:
         run: dotnet nuget push TehBilly.CSharp.SomeLibrary.${VERSION}.nupkg --source https://nuget.pkg.github.com/tehbilly/index.json --api-key ${GITHUB_TOKEN}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  trigger_downstream:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+      - name: npm install @octokit/action
+        run: npm install @octokit/action
+      - name: trigger-downstream.js
+        run: node .github/actions/trigger-downstream.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
