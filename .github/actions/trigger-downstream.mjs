@@ -6,7 +6,7 @@ const repo = process.env.DOWNSTREAM_REPO;
 console.log(`Triggering downstream workflow for ${repo}:`, {
     event_type: "library_updated",
     client_payload: {
-        library: process.env.GITHUB_REPOSITORY,
+        library: process.env.GITHUB_REPOSITORY.split("/")[1],
         version: process.env.GITHUB_REF_NAME.substring(1),
     },
 });
@@ -16,7 +16,7 @@ const response = await octokit.rest.repos.createDispatchEvent({
     repo: repo,
     event_type: "library_updated",
     client_payload: {
-        library: process.env.GITHUB_REPOSITORY,
+        library: process.env.GITHUB_REPOSITORY.split("/")[1],
         version: process.env.GITHUB_REF_NAME.substring(1),
     },
 });
