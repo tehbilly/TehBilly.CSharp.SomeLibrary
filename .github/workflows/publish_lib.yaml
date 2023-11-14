@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - name: Verify commit exists in origin/main
-        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.x
       - name: Set VERSION variable from tag
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       - name: Build
@@ -44,5 +46,6 @@ jobs:
       - name: trigger-downstream.js
         run: node .github/actions/trigger-downstream.mjs
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Have to use the PAT here because the GITHUB_TOKEN doesn't have access to the downstream repo
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
           DOWNSTREAM_REPO: ${{ matrix.downstream }}
