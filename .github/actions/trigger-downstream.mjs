@@ -1,4 +1,4 @@
-import { OctoKit } from "@octokit/action";
+import { Octokit } from "@octokit/action";
 
 const octokit = new Octokit();
 
