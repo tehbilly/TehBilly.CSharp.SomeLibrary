@@ -42,7 +42,7 @@ jobs:
       - name: npm install @octokit/action
         run: npm install @octokit/action
       - name: trigger-downstream.js
-        run: node .github/actions/trigger-downstream.js
+        run: node .github/actions/trigger-downstream.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOWNSTREAM_REPO: ${{ matrix.downstream }}
