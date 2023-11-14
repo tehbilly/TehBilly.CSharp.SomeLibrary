@@ -11,7 +11,7 @@ const response = await octokit.rest.repos.createDispatchEvent({
     event_type: "library_updated",
     client_payload: {
         library: process.env.GITHUB_REPOSITORY,
-        version: process.env.GITHUB_REF,
+        version: process.env.VERSION,
     },
 });
 console.log("Response:", response);
