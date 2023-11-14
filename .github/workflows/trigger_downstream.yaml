@@ -1,0 +1,21 @@
+name: Trigger Downstream Repos
+
+on:
+  registry_package:
+    types:
+      - published
+
+jobs:
+  trigger_downstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+      - name: npm install @octokit/action
+        run: npm install @octokit/action
+      - name: trigger-downstream.js
+        run: node .github/actions/trigger-downstream.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
