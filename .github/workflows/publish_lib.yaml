@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs: 
+        version: ${{ steps.set_version.outputs.version }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
