@@ -19,6 +19,9 @@ jobs:
           dotnet-version: 7.x
       - name: Set VERSION variable from tag
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - name: Set version output variable
+        id: set_version
+        run: echo "version=${GITHUB_REF/refs\/tags\/v/}" >> "$GITHUB_OUTPUT"
       - name: Build
         run: dotnet build --configuration Release /p:Version=${VERSION}
       - name: Pack
@@ -53,5 +56,5 @@ jobs:
           DOWNSTREAM_REPO: ${{ matrix.downstream }}
           LIBRARIES: |-
             {
-              "TehBilly.CSharp.SomeLibrary": "${{ github.event.client_payload.version }}"
+              "TehBilly.CSharp.SomeLibrary": "${{ needs.build.outputs.version }}"
             }
