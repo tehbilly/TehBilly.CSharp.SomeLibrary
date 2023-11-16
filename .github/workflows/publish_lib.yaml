@@ -51,3 +51,7 @@ jobs:
           # Have to use the PAT here because the GITHUB_TOKEN doesn't have access to the downstream repo
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
           DOWNSTREAM_REPO: ${{ matrix.downstream }}
+          LIBRARIES: |-
+            {
+              "TehBilly.CSharp.SomeLibrary": "${{ github.event.client_payload.version }}"
+            }
